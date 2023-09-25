@@ -67,6 +67,12 @@
   border: 1px solid aliceblue;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 }
+.form-group-checkbox {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
 
 .form-group-btn button:hover {
   background-color: #f78fa7;
