@@ -30,7 +30,7 @@ signUpBtn.addEventListener("click", (e) => {
 
     if (signUpResp.status) {
       document.getElementById("error-msg").innerText = signUpResp.message;
-      window.location.href = "./pages/login.html";
+      //window.location.href = "./pages/login.html";
     } else {
       document.getElementById("error-msg").innerText = signUpResp.message;
     }

@@ -3,7 +3,94 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
     <title>Products Display</title>
   </head>
-  <body></body>
+  <body>
+    <div id="main-container">
+      <div class="container" id="container"></div>
+    </div>
+
+    <script>
+      const getProducts = async () => {
+        const response = await fetch("https://dummyjson.com/products");
+        const { products } = await response.json();
+        //console.log(products);
+
+        for (let product of products) {
+          console.log(product);
+
+          const container = document.getElementById("container");
+          container.classList.add(
+            "d-flex",
+            "flex-wrap",
+
+            "gap-5"
+          );
+
+          const card = document.createElement("div");
+          card.style.width = "22%";
+          card.style.height = "400px";
+          card.className = "card";
+
+          const cardHeader = document.createElement("div");
+          cardHeader.className = "card-header h-75";
+
+          const cardImg = document.createElement("img");
+          cardImg.src = product.thumbnail;
+          cardImg.className = "w-100 h-100";
+
+          cardHeader.append(cardImg);
+          card.append(cardHeader);
+
+          const cardBody = document.createElement("div");
+
+          const cardTitle = document.createElement("h5");
+          cardTitle.innerText =
+            product.title.length > 15
+              ? product.title.slice(0, 14) + "..."
+              : product.title;
+          cardTitle.className = "text-center";
+
+          const cardP = document.createElement("p");
+          cardP.innerText =
+            product.description.length > 30
+              ? product.description.slice(0, 29) + "...."
+              : product.description;
+          cardP.className = "text-center";
+
+          card.append(cardBody);
+          cardBody.append(cardTitle);
+          cardBody.append(cardP);
+
+          const cardFooter = document.createElement("div");
+
+          const viewBtn = document.createElement("button");
+          viewBtn.innerText = "View Details";
+          viewBtn.className = "btn btn-outline-primary btn-sm m-2";
+
+          const editBtn = document.createElement("button");
+          editBtn.innerText = "Edit Detail";
+          editBtn.className = "btn btn-outline-success btn-sm m-2";
+
+          const deleteBtn = document.createElement("button");
+          deleteBtn.innerText = "Delete";
+          deleteBtn.className = "btn btn-outline-danger btn-sm m-2";
+
+          card.append(cardFooter);
+          cardFooter.append(viewBtn);
+          cardFooter.append(editBtn);
+          cardFooter.append(deleteBtn);
+          container.append(card);
+        }
+      };
+
+      getProducts();
+    </script>
+  </body>
 </html>
