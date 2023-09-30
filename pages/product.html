@@ -60,25 +60,147 @@
           </div>
         </div>
       </nav>
-      <div class="container mt-5" id="container"></div>
+
+      <!-- Add Button -->
+      <div class="container">
+        <button
+          type="button"
+          class="btn btn-primary mt-3"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+        >
+          Add Product
+        </button>
+
+        <!--Add Modal -->
+        <div
+          class="modal fade"
+          id="staticBackdrop"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabindex="-1"
+          aria-labelledby="staticBackdropLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                  Add Product Form
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form action="">
+                  <div class="form-floating mb-3">
+                    <input
+                      type="text"
+                      id="add-img"
+                      class="form-control"
+                      placeholder="Enter Image URL"
+                    />
+                    <label for="add-img">Product Image URL</label>
+                  </div>
+
+                  <div class="form-floating mb-3">
+                    <input
+                      type="text"
+                      id="add-title"
+                      class="form-control"
+                      placeholder="Enter Product Title"
+                    />
+                    <label for="add-title">Product Title</label>
+                  </div>
+
+                  <div class="row mb-3">
+                    <div class="col-6">
+                      <div class="form-floating">
+                        <input
+                          type="number"
+                          id="add-price"
+                          placeholder="Enter Product Price"
+                          class="form-control"
+                        />
+                        <label for="add-price">Product Price</label>
+                      </div>
+                    </div>
+
+                    <div class="col-6">
+                      <div class="form-floating">
+                        <input
+                          type="text"
+                          id="add-category"
+                          placeholder="Enter Product Category"
+                          class="form-control"
+                        />
+                        <label for="add-category">Product Category</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-floating mb-3">
+                    <textarea
+                      id="add-desc"
+                      cols="30"
+                      rows="10"
+                      placeholder="Enter Description"
+                      class="form-control"
+                    ></textarea>
+                    <label for="add-desc">Product Description</label>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                  id="close-btn"
+                >
+                  Close
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onclick="addProduct(event)"
+                >
+                  Add Product
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container mt-3" id="container"></div>
     </div>
 
     <script>
+      let actualProduct = [];
+
       const getProducts = async () => {
         const response = await fetch("https://dummyjson.com/products");
         const { products } = await response.json();
         //console.log(products);
 
+        actualProduct = products;
+        newProducts(products);
+      };
+
+      getProducts();
+
+      const newProducts = (products) => {
+        container.innerHTML = "";
         for (let product of products) {
           console.log(product);
 
           const container = document.getElementById("container");
-          container.classList.add(
-            "d-flex",
-            "flex-wrap",
-
-            "gap-5"
-          );
+          container.classList.add("d-flex", "flex-wrap", "gap-5");
 
           const card = document.createElement("div");
           card.style.width = "22%";
@@ -137,7 +259,37 @@
         }
       };
 
-      getProducts();
+      function addProduct(e) {
+        e.preventDefault();
+        console.log("clicked");
+        const ImageURL = document.getElementById("add-img").value;
+        const title = document.getElementById("add-title").value;
+        const price = document.getElementById("add-price").value;
+        const category = document.getElementById("add-category").value;
+        const description = document.getElementById("add-desc").value;
+
+        //console.log(ImageURL, title, price, category, description);
+
+        const newData = {
+          id: Date.now(),
+          thumbnail: ImageURL,
+          title: title,
+          price,
+          category,
+          description,
+        };
+        //console.log(actualProduct);
+        //console.log([newData, ...actualProduct]);
+        newProducts([newData, ...actualProduct]);
+        document.getElementById("close-btn").click();
+      }
+
+      addProduct();
     </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
