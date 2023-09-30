@@ -175,6 +175,109 @@
             </div>
           </div>
         </div>
+
+        <!--View Modal -->
+        <div
+          class="modal fade"
+          id="viewModal"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabindex="-1"
+          aria-labelledby="staticBackdropLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                  View Product Detail
+                </h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form action="">
+                  <div class="form-floating mb-3 text-center">
+                    <img
+                      src=""
+                      alt="product-image"
+                      id="view-img"
+                      height="300px"
+                      width="300px"
+                    />
+                  </div>
+
+                  <div class="form-floating mb-3">
+                    <input
+                      type="text"
+                      id="view-title"
+                      class="form-control"
+                      placeholder="Enter Product Title"
+                      readonly
+                    />
+                    <label for="add-title">Product Title</label>
+                  </div>
+
+                  <div class="row mb-3">
+                    <div class="col-6">
+                      <div class="form-floating">
+                        <input
+                          type="number"
+                          id="view-price"
+                          placeholder="Enter Product Price"
+                          class="form-control"
+                          readonly
+                        />
+                        <label for="add-price">Product Price</label>
+                      </div>
+                    </div>
+
+                    <div class="col-6">
+                      <div class="form-floating">
+                        <input
+                          type="text"
+                          id="view-category"
+                          placeholder="Enter Product Category"
+                          class="form-control"
+                          readonly
+                        />
+                        <label for="add-category">Product Category</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-floating mb-3">
+                    <textarea
+                      id="view-desc"
+                      cols="30"
+                      rows="13"
+                      placeholder="Enter Description"
+                      class="form-control"
+                      readonly
+                    ></textarea>
+                    <label for="add-desc">Product Description</label>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="button" class="btn btn-primary">
+                  Understood
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="container mt-3" id="container"></div>
@@ -244,6 +347,18 @@
           const viewBtn = document.createElement("button");
           viewBtn.innerText = "View Details";
           viewBtn.className = "btn btn-outline-primary btn-sm m-2";
+          viewBtn.setAttribute("data-bs-toggle", "modal");
+          viewBtn.setAttribute("data-bs-target", "#viewModal");
+
+          viewBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            document.getElementById("view-img").src = product.thumbnail;
+            document.getElementById("view-title").value = product.title;
+            document.getElementById("view-price").value = product.price;
+            document.getElementById("view-category").value = product.category;
+            document.getElementById("view-desc").value = product.description;
+          });
 
           const editBtn = document.createElement("button");
           editBtn.innerText = "Edit Detail";
